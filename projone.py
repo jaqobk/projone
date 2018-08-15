@@ -1,42 +1,34 @@
-from flask import Flask, render_template, Blueprint
-
+from flask import Flask, flash, redirect, render_template, request, session, abort, current_app, url_for
 from flask_bootstrap import Bootstrap
 from flask_admin import Admin
+from wtforms import Form, TextField, PasswordField, validators
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 #Admin VIEW Here
 admin = Admin(app, name='myapp', template_mode='bootstrap3')
-
-#index template
+#home template
 @app.route('/')
 def index():
-    return render_template('home.html')
-
-#home template
-@app.route('/home')
-def home():
 	return render_template('home.html')
-#login template
+#end
+#Start Login Template
 @app.route('/login')
 def login():
 	return render_template('login.html')
-#end login template
-#start contact us templates
+#end Login template
 @app.route('/contactus')
 def contactus():
 	return render_template('contactus.html')
 #end contact template
-#test nav
+#base 
 @app.route('/base')
 def base():
 	return render_template('base.html')
-#Start Footer
-@app.route('/footer')
-def footer():
-	return render_template('footer.html')
-#end footer
-
-
+#end base
 if __name__ == '__main__':
+	app.secret_key = os.urandom(12)
 	app.run(debug=True)
